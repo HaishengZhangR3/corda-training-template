@@ -36,7 +36,9 @@ class IOUTransferFlow(val linearId: UniqueIdentifier, val newLender: Party): Flo
 
         val participants = (inputState.participants + newLender).map { it.owningKey }
 
+        // the notary should be the one used when we do "issue"
         val notary = serviceHub.networkMapCache.notaryIdentities.first()
+//        val notary = inputStateRef.state.notary
         val builder = TransactionBuilder(notary)
         builder.addCommand(command, participants)
                 .addInputState(inputStateRef)
